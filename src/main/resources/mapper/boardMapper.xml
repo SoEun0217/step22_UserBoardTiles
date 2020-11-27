@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardMapper">
+
+	<select id="selectAll"  parameterType="string" resultType="electronicsDTO">
+	  select*from electronics
+	     <if test="_parameter!=null">
+	       where model_num=#{_parameter}
+	     </if>
+	 
+	</select>
+	
+	
+	
+	<update id="readnumUpdate" parameterType="string">
+	  update Electronics set readnum = readnum+1 where model_num=#{_parameter}
+	</update>
+	
+	<insert id="insert" parameterType="electronicsDTO">
+	  insert into Electronics  values (#{modelNum},#{modelName},#{price},#{description},#{password},sysdate,0,#{fname},#{fsize})
+	</insert>
+	
+	<update id="update" parameterType="electronicsDTO">
+	   update Electronics set model_name=#{modelName},price=#{price},description=#{description}
+	   where model_num = #{modelNum} and password=#{password}
+	</update>
+	
+	<delete id="delete" parameterType="map">
+	  delete from electronics where model_num = #{modelNum} and password=#{password}
+	</delete>
+</mapper>
